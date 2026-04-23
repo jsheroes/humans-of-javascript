@@ -1,0 +1,168 @@
+---
+interface Photo {
+	src: string;
+	name: string;
+	index: number;
+	year: string | null;
+	orientation: 'landscape' | 'portrait' | 'square';
+}
+
+interface Props {
+	photos: Photo[];
+	heroImageCount?: number;
+}
+
+const { photos, heroImageCount = 12 } = Astro.props;
+
+const accents = ['blue', 'coral', 'mint', 'yellow'];
+const heroMapper = photos.map((photo) => ({
+	src: photo.src,
+	name: photo.name,
+	orientation: photo.orientation,
+}));
+const initialHeroPhotos = heroMapper.slice(0, Math.min(heroImageCount, heroMapper.length));
+
+const storyEntries = photos.flatMap((photo, index) => {
+	const previousYear = index > 0 ? photos[index - 1].year : null;
+	const currentYear = photo.year ?? 'Archive';
+	const isNewYear = index === 0 || currentYear !== (previousYear ?? 'Archive');
+
+	return [
+		...(isNewYear ? [{ type: 'year' as const, year: currentYear }] : []),
+		{ type: 'photo' as const, photo, accent: accents[index % accents.length] },
+	];
+});
+---
+
+<section class="photo-story" id="page-top">
+	<div class="photo-story__motif photo-story__motif--top-left" aria-hidden="true"></div>
+	<div class="photo-story__motif photo-story__motif--top-right" aria-hidden="true"></div>
+	<div class="photo-story__motif photo-story__motif--bottom-left" aria-hidden="true"></div>
+
+	<div class="container photo-story__hero">
+		<p class="photo-story__eyebrow">Humans of JavaScript</p>
+
+		<div class="photo-story__hero-copy">
+			<h1>Celebrating 10 years of community driven events.</h1>
+			<p class="photo-story__lede">
+				A living photo archive for JSHeroes, built around the people, energy, backstage work,
+				and accidental magic that shaped the community over the years.
+			</p>
+		</div>
+
+		<div class="photo-story__hero-collage" aria-label="A collage from the JSHeroes archive" data-hero-collage>
+			{
+				initialHeroPhotos.map((photo, index) => (
+					<figure
+						class:list={[
+							'hero-collage__card',
+							photo.orientation === 'portrait' && 'hero-collage__card--portrait',
+						]}
+							style={`--tilt:${index % 2 === 0 ? '-3deg' : '3deg'}; --lift:${index % 3 === 0 ? '-0.8rem' : index % 3 === 1 ? '0.6rem' : '1.1rem'};`}
+					>
+						<img src={photo.src} alt="" loading={index < 4 ? 'eager' : 'lazy'} decoding="async" />
+					</figure>
+				))
+			}
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="photo-sequence">
+			{
+				storyEntries.map((entry, index) =>
+					entry.type === 'year' ? (
+						<header class="year-break" data-reveal>
+							<p class="year-break__eyebrow">Archive chapter</p>
+							<h2>{entry.year}</h2>
+						</header>
+					) : (
+						<article
+							class:list={[
+								'story-panel',
+								index % 2 === 0 && 'story-panel--reverse',
+								entry.photo.orientation === 'portrait' && 'photo-card--portrait',
+								entry.photo.orientation === 'square' && 'photo-card--square',
+							]}
+							style={`--accent:var(--color-${entry.accent});`}
+							data-reveal
+						>
+							<div class="story-panel__sticky">
+								<div class="story-panel__layout">
+									<figure class="photo-card">
+										<div class="photo-card__badge">{entry.photo.year ?? 'Archive'}</div>
+										<div class="photo-card__frame">
+											<img
+												src={entry.photo.src}
+												alt={`JSHeroes archive photo ${entry.photo.index + 1}`}
+												loading={entry.photo.index < 6 ? 'eager' : 'lazy'}
+												decoding="async"
+												fetchpriority={entry.photo.index < 2 ? 'high' : 'auto'}
+											/>
+										</div>
+									</figure>
+								</div>
+							</div>
+						</article>
+					),
+				)
+			}
+		</div>
+	</div>
+
+	<a class="back-to-top" href="#page-top" aria-label="Back to top">
+		<span>Back to top</span>
+	</a>
+</section>
+
+<script define:vars={{ heroMapper, heroImageCount }} is:inline>
+	const heroCollage = document.querySelector('[data-hero-collage]');
+	const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+
+	function shuffle(items) {
+		const next = [...items];
+
+		for (let index = next.length - 1; index > 0; index -= 1) {
+			const swapIndex = Math.floor(Math.random() * (index + 1));
+			[next[index], next[swapIndex]] = [next[swapIndex], next[index]];
+		}
+
+		return next;
+	}
+
+	if (heroCollage && Array.isArray(heroMapper) && heroMapper.length > 0) {
+		const selection = shuffle(heroMapper).slice(0, Math.min(heroImageCount, heroMapper.length));
+
+		heroCollage.innerHTML = selection
+			.map((photo, index) => {
+				const tilt = index % 2 === 0 ? '-3deg' : '3deg';
+				const lift = index % 3 === 0 ? '-0.8rem' : index % 3 === 1 ? '0.6rem' : '1.1rem';
+				const portraitClass = photo.orientation === 'portrait' ? ' hero-collage__card--portrait' : '';
+
+				return `
+					<figure class="hero-collage__card${portraitClass}" style="--tilt:${tilt}; --lift:${lift};">
+						<img src="${photo.src}" alt="" loading="${index < 4 ? 'eager' : 'lazy'}" decoding="async" />
+					</figure>
+				`;
+			})
+			.join('');
+	}
+
+	if (revealItems.length > 0) {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (!entry.isIntersecting) continue;
+					entry.target.classList.add('is-visible');
+					observer.unobserve(entry.target);
+				}
+			},
+			{
+				threshold: 0.16,
+				rootMargin: '0px 0px -8% 0px',
+			},
+		);
+
+		revealItems.forEach((item) => observer.observe(item));
+	}
+</script>

@@ -1,0 +1,27 @@
+<svg width="1080" height="1340" viewBox="0 0 1080 1340" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tileVertical" x1="204" y1="136" x2="836" y2="812" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF17A"/>
+      <stop offset="1" stop-color="#FFCC67"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="150" y="80" width="780" height="780" rx="170" fill="url(#tileVertical)"/>
+
+  <g fill="#082334">
+    <circle cx="396" cy="288" r="58"/>
+    <circle cx="684" cy="288" r="58"/>
+    <rect x="338" y="354" width="116" height="398" rx="58"/>
+    <rect x="626" y="354" width="116" height="398" rx="58"/>
+    <rect x="396" y="446" width="288" height="82" rx="41"/>
+  </g>
+
+  <circle cx="418" cy="284" r="10" fill="#FFEB94"/>
+  <circle cx="662" cy="284" r="10" fill="#FFEB94"/>
+
+  <path d="M620 118H778C815.555 118 846 148.445 846 186V212C846 249.555 815.555 280 778 280H722L684 315V280H688C650.445 280 620 249.555 620 212V186C620 148.445 650.445 118 688 118H620Z" fill="#3178C6"/>
+  <text x="722" y="221" fill="#FFFDF8" font-family="Sora, Inter, 'Trebuchet MS', sans-serif" font-size="78" font-weight="700" letter-spacing="-2">JS</text>
+
+  <text x="540" y="1008" text-anchor="middle" fill="#082334" font-family="Sora, Inter, 'Trebuchet MS', sans-serif" font-size="98" font-weight="600" letter-spacing="-3">Humans of</text>
+  <text x="540" y="1138" text-anchor="middle" fill="#082334" font-family="Sora, Inter, 'Trebuchet MS', sans-serif" font-size="146" font-weight="700" letter-spacing="-5">JavaScript</text>
+</svg>

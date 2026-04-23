@@ -1,0 +1,26 @@
+---
+import Container from '../ui/Container.astro';
+import BrandMark from '../ui/BrandMark.astro';
+import { site } from '../../data/site';
+---
+
+<footer class="site-footer">
+	<Container class="site-footer__inner">
+		<div class="site-footer__brand">
+			<BrandMark compact />
+			<p>
+				Humans of JavaScript is the anniversary memory site for the 10-year JSHeroes story.
+			</p>
+		</div>
+
+		<nav aria-label="Footer">
+			<ul class="site-footer__links">
+				{
+					site.footerLinks.map((item) => (
+						<li><a href={item.href}>{item.label}</a></li>
+					))
+				}
+			</ul>
+		</nav>
+	</Container>
+</footer>

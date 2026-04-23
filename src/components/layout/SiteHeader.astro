@@ -1,0 +1,25 @@
+---
+import Container from '../ui/Container.astro';
+import BrandMark from '../ui/BrandMark.astro';
+import { site } from '../../data/site';
+---
+
+<header class="site-header">
+	<Container class="site-header__inner">
+		<a class="site-header__brand" href="/" aria-label="Humans of JavaScript home">
+			<BrandMark />
+		</a>
+
+		<div class="site-header__anniversary">10 years</div>
+
+		<nav class="site-header__nav" aria-label="Primary">
+			<ul>
+				{
+					site.nav.map((item) => (
+						<li><a href={item.href}>{item.label}</a></li>
+					))
+				}
+			</ul>
+		</nav>
+	</Container>
+</header>
