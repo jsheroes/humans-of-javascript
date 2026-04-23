@@ -101,18 +101,13 @@ select {
 	padding-left: clamp(1rem, 5vw, 4.5rem);
 }
 
-.photo-story__eyebrow {
-	margin: 0;
+.photo-story__brand {
 	position: absolute;
-	top: clamp(0.1rem, 0.8vw, 0.6rem);
-	right: clamp(2.8rem, 7vw, 8rem);
+	top: clamp(0.75rem, 1.6vw, 1.5rem);
+	right: clamp(1rem, 4vw, 3rem);
 	z-index: 2;
-	font-size: clamp(1rem, 1.25vw, 1.3rem);
-	font-weight: 700;
-	letter-spacing: 0.17em;
-	text-transform: uppercase;
-	color: var(--color-blue);
-	text-align: right;
+	width: clamp(11rem, 20vw, 16rem);
+	height: auto;
 }
 
 .photo-story h1 {
@@ -415,12 +410,10 @@ select {
 		padding-right: 0.2rem;
 	}
 
-	.photo-story__eyebrow {
-		top: 0.65rem;
-		right: 0.85rem;
-		max-width: 14rem;
-		font-size: 1.05rem;
-		letter-spacing: 0.14em;
+	.photo-story__brand {
+		top: 0.6rem;
+		right: 0.7rem;
+		width: 10rem;
 	}
 
 	.photo-story h1 {
