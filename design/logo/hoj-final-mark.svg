@@ -7,17 +7,18 @@
   </defs>
   <rect x="128" y="128" width="768" height="768" rx="164" fill="url(#tile)"/>
 
-  <g fill="#082334">
-    <circle cx="370" cy="332" r="58"/>
-    <circle cx="654" cy="332" r="58"/>
-    <rect x="312" y="398" width="116" height="390" rx="58"/>
-    <rect x="596" y="398" width="116" height="390" rx="58"/>
-    <rect x="370" y="486" width="284" height="82" rx="41"/>
+  <g transform="translate(512 540) scale(0.82) translate(-512 -512)">
+    <g fill="#082334">
+      <circle cx="370" cy="332" r="58"/>
+      <circle cx="654" cy="332" r="58"/>
+      <rect x="312" y="398" width="116" height="390" rx="58"/>
+      <rect x="596" y="398" width="116" height="390" rx="58"/>
+      <rect x="370" y="486" width="284" height="82" rx="41"/>
+    </g>
+    <circle cx="392" cy="328" r="10" fill="#FFEB94"/>
+    <circle cx="632" cy="328" r="10" fill="#FFEB94"/>
   </g>
 
-  <circle cx="392" cy="328" r="10" fill="#FFEB94"/>
-  <circle cx="632" cy="328" r="10" fill="#FFEB94"/>
-
-  <path d="M588 166H742C779.555 166 810 196.445 810 234V260C810 297.555 779.555 328 742 328H687L654 360V328H656C618.445 328 588 297.555 588 260V234C588 196.445 618.445 166 656 166H588Z" fill="#3178C6"/>
-  <text x="686" y="269" fill="#FFFDF8" font-family="Sora, Inter, 'Trebuchet MS', sans-serif" font-size="78" font-weight="700" letter-spacing="-2">JS</text>
+  <path d="M628 166H782C819.555 166 850 196.445 850 234V260C850 297.555 819.555 328 782 328H727L694 360V328H696C658.445 328 628 297.555 628 260V234C628 196.445 658.445 166 696 166H628Z" fill="#3178C6"/>
+  <text x="726" y="269" fill="#FFFDF8" font-family="Sora, Inter, 'Trebuchet MS', sans-serif" font-size="78" font-weight="700" letter-spacing="-2">JS</text>
 </svg>
