@@ -1,11 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="128 128 768 768" fill="none">
   <defs>
     <linearGradient id="faviconTile" x1="192" y1="176" x2="832" y2="848" gradientUnits="userSpaceOnUse">
       <stop stop-color="#FFF17A"/>
       <stop offset="1" stop-color="#FFCC67"/>
     </linearGradient>
   </defs>
-  <rect x="64" y="64" width="896" height="896" rx="192" fill="url(#faviconTile)"/>
+  <rect x="128" y="128" width="768" height="768" rx="164" fill="url(#faviconTile)"/>
 
   <g transform="translate(512 540) scale(0.82) translate(-512 -512)">
     <g fill="#082334">
