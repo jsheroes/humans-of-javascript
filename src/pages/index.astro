@@ -1,54 +1,51 @@
 ---
-import { readdirSync } from 'node:fs';
-import { extname, resolve } from 'node:path';
-import PhotoStory from '../components/home/PhotoStory.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { readdirSync } from "node:fs";
+import { extname, resolve } from "node:path";
+import PhotoStory from "../components/home/PhotoStory.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const galleryDir = resolve(process.cwd(), 'public/images/aniversare');
-const allowedExtensions = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif', '.JPG', '.JPEG', '.PNG', '.WEBP']);
+const galleryDir = resolve(process.cwd(), "public/images/aniversare");
+const allowedExtensions = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".JPG", ".JPEG", ".PNG", ".WEBP"]);
 
 function inferYear(value: string) {
-	const match = value.match(/(20\d{2})/);
-	return match ? match[1] : null;
+  const match = value.match(/(20\d{2})/);
+  return match ? match[1] : null;
 }
 
 function inferOrientation(filename: string) {
-	if (/PXL_|IMG_|202\d/.test(filename)) return 'portrait';
-	if (/DSC_|_MG_|n\.jpg$/i.test(filename)) return 'landscape';
-	return 'landscape';
+  if (/PXL_|IMG_|202\d/.test(filename)) return "portrait";
+  if (/DSC_|_MG_|n\.jpg$/i.test(filename)) return "landscape";
+  return "landscape";
 }
 
 const yearDirs = readdirSync(galleryDir, { withFileTypes: true })
-	.filter((entry) => entry.isDirectory())
-	.map((entry) => entry.name)
-	.sort((left, right) => left.localeCompare(right, undefined, { numeric: true, sensitivity: 'base' }));
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+  .sort((left, right) => left.localeCompare(right, undefined, { numeric: true, sensitivity: "base" }));
 
 const heroImageCount = 12;
 
 const photos = yearDirs
-	.flatMap((year) =>
-		readdirSync(resolve(galleryDir, year))
-			.filter((file) => allowedExtensions.has(extname(file)))
-			.sort((left, right) => left.localeCompare(right, undefined, { numeric: true, sensitivity: 'base' }))
-			.map((file) => ({
-				src: `/images/aniversare/${year}/${file}`,
-				name: file,
-				year,
-				orientation: inferOrientation(file),
-			})),
-	)
-	.map((photo, index) => ({
-		...photo,
-		index,
-		year: inferYear(photo.year) ?? photo.year,
-	}));
+  .flatMap((year) =>
+    readdirSync(resolve(galleryDir, year))
+      .filter((file) => allowedExtensions.has(extname(file)))
+      .sort((left, right) => left.localeCompare(right, undefined, { numeric: true, sensitivity: "base" }))
+      .map((file) => ({
+        src: `/images/aniversare/${year}/${file}`,
+        name: file,
+        year,
+        orientation: inferOrientation(file)
+      }))
+  )
+  .map((photo, index) => ({
+    ...photo,
+    index,
+    year: inferYear(photo.year) ?? photo.year
+  }));
 ---
 
-<BaseLayout
-	title="Humans of JavaScript"
-	description="A dynamic anniversary photo slideshow for JSHeroes, generated from the images currently present in the archive folder."
->
-	<main id="content">
-		<PhotoStory photos={photos} heroImageCount={heroImageCount} />
-	</main>
+<BaseLayout title="Humans of JavaScript" description="Celebrating 10 years of community driven events." image="cover.png">
+  <main id="content">
+    <PhotoStory photos={photos} heroImageCount={heroImageCount} />
+  </main>
 </BaseLayout>
