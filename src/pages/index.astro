@@ -25,6 +25,7 @@ const yearDirs = readdirSync(galleryDir, { withFileTypes: true })
 
 const heroImageCount = 12;
 const desktopColumns: 1 | 2 | 3 = 2;
+const enableMobileFocusEffect = false;
 
 const photos = yearDirs
   .flatMap((year) =>
@@ -47,6 +48,6 @@ const photos = yearDirs
 
 <BaseLayout title="Humans of JavaScript" description="Celebrating 10 years of community driven events." image="cover.png">
   <main id="content">
-    <PhotoStory photos={photos} heroImageCount={heroImageCount} desktopColumns={desktopColumns} />
+    <PhotoStory photos={photos} heroImageCount={heroImageCount} desktopColumns={desktopColumns} enableMobileFocusEffect={enableMobileFocusEffect} />
   </main>
 </BaseLayout>

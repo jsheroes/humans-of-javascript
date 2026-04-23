@@ -11,9 +11,10 @@ interface Props {
 	photos: Photo[];
 	heroImageCount?: number;
 	desktopColumns?: 1 | 2 | 3;
+	enableMobileFocusEffect?: boolean;
 }
 
-const { photos, heroImageCount = 12, desktopColumns = 1 } = Astro.props;
+const { photos, heroImageCount = 12, desktopColumns = 1, enableMobileFocusEffect = true } = Astro.props;
 
 const accents = ['blue', 'coral', 'mint', 'yellow'];
 const heroMapper = photos.map((photo) => ({
@@ -35,7 +36,7 @@ const storyEntries = photos.flatMap((photo, index) => {
 });
 ---
 
-<section class="photo-story" id="page-top">
+<section class:list={['photo-story', enableMobileFocusEffect && 'photo-story--mobile-focus']} id="page-top">
 	<div class="photo-story__motif photo-story__motif--top-left" aria-hidden="true"></div>
 	<div class="photo-story__motif photo-story__motif--top-right" aria-hidden="true"></div>
 	<div class="photo-story__motif photo-story__motif--bottom-left" aria-hidden="true"></div>
@@ -122,9 +123,10 @@ const storyEntries = photos.flatMap((photo, index) => {
 	</a>
 </section>
 
-<script define:vars={{ heroMapper, heroImageCount }} is:inline>
+<script define:vars={{ heroMapper, heroImageCount, enableMobileFocusEffect }} is:inline>
 	const heroCollage = document.querySelector('[data-hero-collage]');
 	const revealItems = Array.from(document.querySelectorAll('[data-reveal]'));
+	const storyPanels = Array.from(document.querySelectorAll('.story-panel'));
 
 	function shuffle(items) {
 		const next = [...items];
@@ -171,5 +173,21 @@ const storyEntries = photos.flatMap((photo, index) => {
 		);
 
 		revealItems.forEach((item) => observer.observe(item));
+	}
+
+	if (enableMobileFocusEffect && storyPanels.length > 0) {
+		const centerObserver = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					entry.target.classList.toggle('is-centered', entry.isIntersecting);
+				}
+			},
+			{
+				threshold: 0.55,
+				rootMargin: '-18% 0px -18% 0px',
+			},
+		);
+
+		storyPanels.forEach((panel) => centerObserver.observe(panel));
 	}
 </script>
