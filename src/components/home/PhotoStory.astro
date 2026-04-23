@@ -10,9 +10,10 @@ interface Photo {
 interface Props {
 	photos: Photo[];
 	heroImageCount?: number;
+	desktopColumns?: 1 | 2 | 3;
 }
 
-const { photos, heroImageCount = 12 } = Astro.props;
+const { photos, heroImageCount = 12, desktopColumns = 1 } = Astro.props;
 
 const accents = ['blue', 'coral', 'mint', 'yellow'];
 const heroMapper = photos.map((photo) => ({
@@ -74,7 +75,7 @@ const storyEntries = photos.flatMap((photo, index) => {
 	</div>
 
 	<div class="container">
-		<div class="photo-sequence">
+		<div class:list={['photo-sequence', `photo-sequence--desktop-${desktopColumns}`]}>
 			{
 				storyEntries.map((entry, index) =>
 					entry.type === 'year' ? (

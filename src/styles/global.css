@@ -392,6 +392,52 @@ select {
 	.photo-card__frame img {
 		height: min(76svh, 56rem);
 	}
+
+	.photo-sequence--desktop-2,
+	.photo-sequence--desktop-3 {
+		align-items: start;
+		gap: var(--space-5);
+	}
+
+	.photo-sequence--desktop-2 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.photo-sequence--desktop-3 {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.photo-sequence--desktop-2 .year-break,
+	.photo-sequence--desktop-3 .year-break {
+		grid-column: 1 / -1;
+	}
+
+	.photo-sequence--desktop-2 .story-panel,
+	.photo-sequence--desktop-3 .story-panel {
+		min-height: auto;
+	}
+
+	.photo-sequence--desktop-2 .story-panel__sticky,
+	.photo-sequence--desktop-3 .story-panel__sticky {
+		padding-bottom: 0;
+	}
+
+	.photo-sequence--desktop-2 .story-panel__layout,
+	.photo-sequence--desktop-3 .story-panel__layout,
+	.photo-sequence--desktop-2 .story-panel--reverse .story-panel__layout,
+	.photo-sequence--desktop-3 .story-panel--reverse .story-panel__layout {
+		justify-items: stretch;
+	}
+
+	.photo-sequence--desktop-2 .photo-card,
+	.photo-sequence--desktop-3 .photo-card {
+		width: 100%;
+	}
+
+	.photo-sequence--desktop-2 .photo-card__frame img,
+	.photo-sequence--desktop-3 .photo-card__frame img {
+		height: auto;
+	}
 }
 
 @media (max-width: 47.99rem) {
